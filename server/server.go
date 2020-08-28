@@ -222,6 +222,8 @@ func New(cfg Config) (*Server, error) {
 
 	log.WithField("http", httpListener.Addr()).WithField("grpc", grpcListener.Addr()).Infof("server listening on addresses")
 
+	log.Infof("check_mod_override")
+
 	// Setup gRPC server
 	serverLog := middleware.GRPCServerLog{
 		WithRequest: !cfg.ExcludeRequestInLog,
