@@ -269,6 +269,13 @@ func New(cfg Config) (*Server, error) {
 		grpcCreds := credentials.NewTLS(grpcTLSConfig)
 		grpcOptions = append(grpcOptions, grpc.Creds(grpcCreds))
 	}
+
+	log.
+		WithField("max_recv_size", cfg.GPRCServerMaxRecvMsgSize).
+		WithField("max_send_size", cfg.GRPCServerMaxSendMsgSize).
+		WithField("grpc_options", grpcOptions).
+		Infof("check_grpc_server")
+
 	grpcServer := grpc.NewServer(grpcOptions...)
 
 	// Setup HTTP server
