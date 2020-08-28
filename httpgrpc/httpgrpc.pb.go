@@ -7,15 +7,17 @@ import (
 	bytes "bytes"
 	context "context"
 	fmt "fmt"
-	proto "github.com/gogo/protobuf/proto"
-	grpc "google.golang.org/grpc"
-	codes "google.golang.org/grpc/codes"
-	status "google.golang.org/grpc/status"
 	io "io"
 	math "math"
 	math_bits "math/bits"
 	reflect "reflect"
 	strings "strings"
+
+	proto "github.com/gogo/protobuf/proto"
+	log "github.com/weaveworks/common/logging"
+	grpc "google.golang.org/grpc"
+	codes "google.golang.org/grpc/codes"
+	status "google.golang.org/grpc/status"
 )
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -455,7 +457,9 @@ func _HTTP_Handle_Handler(srv interface{}, ctx context.Context, dec func(interfa
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
 		return srv.(HTTPServer).Handle(ctx, req.(*HTTPRequest))
 	}
-	return interceptor(ctx, in, info, handler)
+	iface, err := interceptor(ctx, in, info, handler)
+	log.WithField("err", err).Infof("debug_grpc_max_message_size failed in interceptor")
+	return iface, err
 }
 
 var _HTTP_serviceDesc = grpc.ServiceDesc{

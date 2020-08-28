@@ -2,6 +2,8 @@ module github.com/weaveworks/common
 
 go 1.13
 
+replace google.golang.org/grpc => github.com/lahsivjar/grpc-go v1.26.1-0.20200829194821-c3000c72bb3f
+
 require (
 	github.com/armon/go-socks5 v0.0.0-20160902184237-e75332964ef5
 	github.com/aws/aws-sdk-go v1.27.0
