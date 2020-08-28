@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"runtime/debug"
 	"time"
 
 	"golang.org/x/net/context"
@@ -29,6 +30,8 @@ func (s GRPCServerLog) UnaryServerInterceptor(ctx context.Context, req interface
 	resp, err := handler(ctx, req)
 	entry := user.LogWith(ctx, s.Log).WithFields(logging.Fields{"method": info.FullMethod, "duration": time.Since(begin)})
 	if err != nil {
+		entry.Infof("debug_grpc_max_message_size errored %s", err)
+		debug.PrintStack()
 		if s.WithRequest {
 			entry = entry.WithField("request", req)
 		}
