@@ -273,7 +273,8 @@ func New(cfg Config) (*Server, error) {
 	log.
 		WithField("max_recv_size", cfg.GPRCServerMaxRecvMsgSize).
 		WithField("max_send_size", cfg.GRPCServerMaxSendMsgSize).
-		WithField("grpc_options", grpcOptions).
+		WithField("grpc_options_initial", len(cfg.GRPCOptions)).
+		WithField("grpc_options_final", len(grpcOptions)).
 		Infof("check_grpc_server")
 
 	grpcServer := grpc.NewServer(grpcOptions...)
